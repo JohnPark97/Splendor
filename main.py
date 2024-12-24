@@ -77,6 +77,7 @@ class SplendorGame:
             self.players.append({"name": name, "gems": {}, "cards": [], "points": 0})
 
     def collect_gems(self, name, gem_colors):
+        # TODO: Check if the player has enough gems to reserve
         gem_list = gem_colors.split()
         for gem in gem_list:
             if self.gems[gem] > 0:
