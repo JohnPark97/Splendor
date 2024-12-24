@@ -69,7 +69,6 @@ class SplendorGame:
             result.append(lst.pop(random.randint(0, len(lst)-1)))
         return result
 
-
     def add_player(self, name):
         if name in [player["name"] for player in self.players]:
             print(f"{name} is already in use")
@@ -89,27 +88,33 @@ class SplendorGame:
 
 
     def turn_action(self, name, action):
-        if action == "collect":
-            input("""Would you like to collect two gems of the same type or three gems of different types?
+        # Collect
+        if action == 1:
+            choices = input("""Would you like to collect two gems of the same type or three gems of different types?
                  1: Two gems of the same type
                  2: Three gems of different types""")
-            if input == "1":
-                prompt = """Which gem would you like to collect?
+            if choices == "1":
+                prompt = """Which gem would you like to collect twice?
                 1: Diamond
                 2: Sapphire
                 3: Emerald
                 4: Ruby
                 5: Onyx"""
-                self.collect_gems(name, input(prompt), 2)
-            elif input == "2":
+                self.collect_gems(name, input(prompt))
+            elif choices == "2":
                 prompt = """Which gems would you like to collect? (Select 3) ex. '1 2 3'
                 1: Diamond
                 2: Sapphire
                 3: Emerald
                 4: Ruby
                 5: Onyx"""
-                self.collect_gems(name, input(prompt), 3)
+                self.collect_gems(name, input(prompt))
 
+    def debug_print(self):
+        print("Gems:")
+        print(self.gems)
+        print("Players:")
+        print(self.players)
 
     def play_game(self):
         self.initialize_cards()
@@ -117,12 +122,17 @@ class SplendorGame:
         self.initialize_gems()
         self.initialize_players()
 
-        # while True:
-        #     for player in self.players:
-        #         print(f"{player['name']}'s turn")
-        #         action = input("What would you like to do? (collect, reserve, buy): ")
-        #         self.turn_action(player["name"], action)
-        #         break
+        while True:
+            for player in self.players:
+                print(f"{player['name']}'s turn")
+                action = input(
+                    """What would you like to do?
+1: Collect
+2: Reserve
+3: Buy\n""")
+                self.turn_action(player["name"], int(action))
+                self.debug_print()
+
 
 
 game = SplendorGame()
